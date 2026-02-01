@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Surprise</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to bottom, #ffe6e6, #ffb3cc);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    h1 {
+        color: #ff1a75;
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        text-shadow: 2px 2px #fff;
+    }
+
+    .button-container {
+        display: flex;
+        gap: 20px;
+    }
+
+    button {
+        font-size: 1.2rem;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        background-color: #ff66b2;
+        color: white;
+        position: relative;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+        transform: scale(1.1);
+    }
+
+    #yes-section {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #yes-section img {
+        max-width: 300px;
+        border-radius: 15px;
+        margin-top: 20px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    /* Hearts animation */
+    .heart {
+        width: 20px;
+        height: 20px;
+        background-color: #ff1a75;
+        position: absolute;
+        transform: rotate(45deg);
+        animation: floatUp 5s linear infinite;
+        z-index: 0;
+    }
+
+    .heart::before,
+    .heart::after {
+        content: '';
+        width: 20px;
+        height: 20px;
+        background-color: #ff1a75;
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    .heart::before {
+        top: -10px;
+        left: 0;
+    }
+
+    .heart::after {
+        left: 10px;
+        top: 0;
+    }
+
+    @keyframes floatUp {
+        0% { transform: translateY(0) rotate(45deg); opacity: 1; }
+        100% { transform: translateY(-600px) rotate(45deg); opacity: 0; }
+    }
+</style>
+</head>
+<body>
+
+<h1>Tayni, will you be my Valentine?</h1>
+
+<div class="button-container">
+    <button id="yes-btn">Yes ❤️</button>
+    <button id="no-btn">No 😢</button>
+</div>
+
+<div id="yes-section">
+    <h2>Yay! I’m so happy! ❤️</h2>
+    <img src="me.jpg" alt="Me">
+    <audio id="love-music" src="mymusic.mp3" autoplay loop></audio>
+</div>
+
+<script>
+    const noBtn = document.getElementById('no-btn');
+    const yesBtn = document.getElementById('yes-btn');
+    const yesSection = document.getElementById('yes-section');
+
+    // Move No button away on hover
+    noBtn.addEventListener('mouseover', () => {
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
+    });
+
+    // Show Yes section on click
+    yesBtn.addEventListener('click', () => {
+        yesSection.style.display = 'flex';
+        yesBtn.style.display = 'none';
+        noBtn.style.display = 'none';
+        document.querySelector('h1').style.display = 'none';
+        document.getElementById('love-music').play();
+    });
+
+    // Create floating hearts
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.animationDuration = 3 + Math.random() * 2 + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+    }
+
+    setInterval(createHeart, 500); // Every half second
+</script>
+
+</body>
+</html>
